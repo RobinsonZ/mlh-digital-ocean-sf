@@ -68,6 +68,7 @@ lyrics_strip = edit_scene.sequence_editor.strips.new_scene(
     name="3D_Lyrics", scene=lyrics_scene, channel=3, frame_start=first_frame + 24
 )
 lyrics_strip.scene_input = "CAMERA"
+lyrics_strip.blend_type = "DIFFERENCE"
 
 bpy.context.window.scene = edit_scene
 
