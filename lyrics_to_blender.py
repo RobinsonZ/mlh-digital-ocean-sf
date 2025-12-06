@@ -14,6 +14,9 @@ new_blend = "lyrics_project.blend"
 shutil.copy(source_blend, new_blend)
 bpy.ops.wm.open_mainfile(filepath=new_blend)
 
+lyrics_scene = bpy.data.scenes["3D Lyrics"]
+bpy.context.window.scene = lyrics_scene
+
 
 def create_text_material():
     mat = bpy.data.materials.new(name="TextMaterial")
