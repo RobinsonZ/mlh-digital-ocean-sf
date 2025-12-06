@@ -16,8 +16,8 @@ LRC format example:
 Format is `[MM:SS.cs] text` where cs = centiseconds.
 
 ## Files
-- `songs/you_make_me_feel_remix.lrc` - word-timed lyrics
-- `songs/you_make_me_feel_remix.wav` - audio
+- `songs/clarity.lrc` - word-timed lyrics
+- `songs/Clarity.mp3` - audio
 - `util.py` - shared code for parsing LRC files
 - `lyrics_to_blender.py` - creates blender project with text objects for each lyric
 - `render_frames.py` - renders a PNG for each lyric frame

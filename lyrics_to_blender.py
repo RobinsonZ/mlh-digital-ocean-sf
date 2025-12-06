@@ -71,7 +71,7 @@ def set_disappear_keyframe(obj, frame: int):
     obj.keyframe_insert(data_path="hide_viewport", frame=frame)
 
 
-lyrics = parse_lrc_file("songs/you_make_me_feel_remix.lrc")
+lyrics = parse_lrc_file("songs/clarity.lrc")
 
 for i, lyric in enumerate(lyrics):
     if not lyric.text:

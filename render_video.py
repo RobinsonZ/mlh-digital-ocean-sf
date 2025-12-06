@@ -50,7 +50,7 @@ subprocess.run(
         "-t",
         str(video_duration),
         "-i",
-        "songs/you_make_me_feel_remix.wav",
+        "songs/Clarity.mp3",
         "-c:v",
         "libx264",
         "-c:a",

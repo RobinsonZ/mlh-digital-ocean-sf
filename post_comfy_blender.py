@@ -23,7 +23,7 @@ new_blend = "post_comfy.blend"
 shutil.copy(source_blend, new_blend)
 bpy.ops.wm.open_mainfile(filepath=new_blend)
 
-lyrics = parse_lrc_file("songs/you_make_me_feel_remix.lrc")
+lyrics = parse_lrc_file("songs/clarity.lrc")
 lyrics_with_text = [lyric for lyric in lyrics if lyric.text]
 
 in_dir = "in"

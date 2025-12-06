@@ -12,7 +12,7 @@ def render_frames(blend_file):
         shutil.rmtree(out_dir)
     os.makedirs(out_dir)
 
-    lyrics = parse_lrc_file("songs/you_make_me_feel_remix.lrc")
+    lyrics = parse_lrc_file("songs/clarity.lrc")
 
     for i, lyric in enumerate(lyrics):
         if not lyric.text:

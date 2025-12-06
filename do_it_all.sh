@@ -18,7 +18,7 @@ blender --background --python post_comfy_blender.py -- lyrics_project.blend
 
 echo ""
 echo "step 5: rendering final video"
-python3 render_video.py post_comfy.blend output.mkv 29869 37665
+python3 render_video.py post_comfy.blend output.mkv 14401 57361
 
 echo ""
 echo "done 🔥 video output: output.mkv"
