@@ -39,7 +39,7 @@ runs all three steps: creates blender project, renders frames, processes through
 
 ### 1. generate lyrics blender project
 ```sh
-/Applications/Blender.app/Contents/MacOS/Blender --background --python lyrics_to_blender.py
+blender --background --python lyrics_to_blender.py
 ```
 creates `lyrics_project.blend` with text objects for each lyric
 

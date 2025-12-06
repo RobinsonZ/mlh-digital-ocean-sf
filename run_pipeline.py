@@ -14,7 +14,7 @@ parallelism = int(sys.argv[2]) if len(sys.argv) == 3 else 1
 print("step 1: creating blender project")
 subprocess.run(
     [
-        "/Applications/Blender.app/Contents/MacOS/Blender",
+        "blender",
         "--background",
         "--python",
         "lyrics_to_blender.py",

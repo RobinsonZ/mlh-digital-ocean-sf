@@ -1,6 +1,8 @@
 import os
+import shutil
 import subprocess
 import sys
+import tempfile
 
 TIME_OFFSET_MS = -170
 
@@ -8,7 +10,9 @@ blend_file = os.path.abspath(sys.argv[1])
 output_path = os.path.abspath(sys.argv[2])
 frame_start = int(sys.argv[3])
 frame_end = int(sys.argv[4])
-temp_output = output_path + ".temp.mkv"
+
+temp_dir = tempfile.mkdtemp()
+temp_output = os.path.join(temp_dir, "frame_")
 
 with open("/tmp/blender_render.py", "w") as f:
     f.write(f"""
@@ -16,75 +20,47 @@ import bpy
 bpy.context.scene.frame_start = {frame_start}
 bpy.context.scene.frame_end = {frame_end}
 bpy.context.scene.render.filepath = "{temp_output}"
+bpy.context.scene.render.image_settings.file_format = 'PNG'
 bpy.context.scene.frame_step = 8
-bpy.ops.render.render(animation=True, write_still=False)
+bpy.ops.render.render(animation=True, write_still=True)
 """)
 
 subprocess.run(
     ["blender", "--background", blend_file, "--python", "/tmp/blender_render.py"],
-    stdout=subprocess.DEVNULL,
-    stderr=subprocess.DEVNULL,
+    check=True,
 )
 
-probe = subprocess.run(
-    [
-        "ffprobe",
-        "-v",
-        "error",
-        "-count_frames",
-        "-select_streams",
-        "v:0",
-        "-show_entries",
-        "stream=nb_read_frames",
-        "-of",
-        "default=noprint_wrappers=1:nokey=1",
-        temp_output,
-    ],
-    capture_output=True,
-    text=True,
-)
-
-num_frames = int(probe.stdout.strip())
-duration = num_frames / 30.0
-
-offset_seconds = TIME_OFFSET_MS / 1000.0
+fps = 240 / 8
+audio_start_seconds = frame_start / 240
+num_video_frames = (frame_end - frame_start) // 8
+video_duration = num_video_frames / fps
 
 subprocess.run(
     [
         "ffmpeg",
         "-y",
-        "-itsoffset",
-        str(offset_seconds),
-        "-r",
-        "30",
+        "-framerate",
+        str(fps),
+        "-pattern_type",
+        "glob",
         "-i",
-        temp_output,
+        f"{temp_dir}/frame_*.png",
+        "-ss",
+        str(audio_start_seconds),
         "-t",
-        str(duration),
+        str(video_duration),
+        "-i",
+        "songs/you_make_me_feel_remix.wav",
         "-c:v",
-        "ffv1",
-        "-level",
-        "3",
-        "-coder",
-        "1",
-        "-context",
-        "1",
-        "-g",
-        "1",
-        "-slices",
-        "24",
-        "-slicecrc",
-        "1",
+        "libx264",
         "-c:a",
-        "pcm_s16le",
-        "-af",
-        f"atrim=0:{duration}",
-        "-fflags",
-        "+genpts",
+        "aac",
+        "-pix_fmt",
+        "yuv420p",
+        "-shortest",
         output_path,
     ],
-    stdout=subprocess.DEVNULL,
-    stderr=subprocess.DEVNULL,
+    check=True,
 )
 
-os.remove(temp_output)
+shutil.rmtree(temp_dir)

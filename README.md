@@ -41,7 +41,7 @@ This runs all three steps in sequence. Optional `parallelism` parameter (default
 
 #### 1. Generate Blender Project
 ```sh
-/Applications/Blender.app/Contents/MacOS/Blender --background --python lyrics_to_blender.py
+blender --background --python lyrics_to_blender.py
 ```
 Creates `lyrics_project.blend` with text objects for each lyric, keyframed to match timing.
 
