@@ -149,6 +149,7 @@ def worker(queue):
             queue.task_done()
         except:
             print(f"[{i}/{total}] Error processing {image_path}!")
+            queue.task_done()
 
 queue = Queue()
 threads = []
