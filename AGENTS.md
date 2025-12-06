@@ -7,8 +7,6 @@ The high level goal of this project is as follows:
 We're still working on the blender part, but
 We have word-timed lyrics in LRC format and matching audio files.
 
-`words.py` plays the audio section with lyrics and displays them in sync.
-
 LRC format example:
 ```
 [02:04.45] You'll be that girl, 
@@ -20,7 +18,6 @@ Format is `[MM:SS.cs] text` where cs = centiseconds.
 ## Files
 - `songs/you_make_me_feel_remix.lrc` - word-timed lyrics
 - `songs/you_make_me_feel_remix.wav` - audio
-- `songs/words.py` - plays synced section
 
 ## Create a blender project from the lyrics file (currently hardcoded to songs/you_make_me_feel_remix.lrc)
 ```sh
