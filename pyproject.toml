@@ -7,7 +7,11 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["fake-bpy-module-3-6 (>=20250130,<20250131)"]
+dependencies = [
+    "fake-bpy-module-latest",
+    "ruff",
+    "pyright"
+]
 
 [tool.poetry]
 packages = [{include = "songs"}]
