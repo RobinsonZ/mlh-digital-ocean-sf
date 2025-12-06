@@ -1,4 +1,4 @@
-# mlh-digital-ocean-sf
+# dj-background-generator
 Project for MLH + DigitalOcean SF Hackathon 2025-12-05
 
 Blender-based time-synced lyric video generator with AI-powered visuals.
