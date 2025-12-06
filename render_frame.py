@@ -3,13 +3,14 @@ import shutil
 import subprocess
 import sys
 
-if len(sys.argv) != 3:
-    print("Usage: render_frame.py <blend_file> <frame_number>")
+if len(sys.argv) not in [3, 4]:
+    print("Usage: render_frame.py <blend_file> <frame_number> [output_dir]")
     sys.exit(1)
 
 blend_file = sys.argv[1]
 frame_number = int(sys.argv[2])
-output_file = f"{frame_number}.png"
+output_dir = sys.argv[3] if len(sys.argv) == 4 else "."
+output_file = os.path.join(output_dir, f"{frame_number}.png")
 
 if os.path.exists(blend_file):
     blend_file = os.path.abspath(blend_file)
