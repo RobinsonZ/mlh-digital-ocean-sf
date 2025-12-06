@@ -5,6 +5,7 @@ import sys
 
 from util import parse_lrc_file
 
+
 def render_frames(blend_file):
     out_dir = "out"
     if os.path.exists(out_dir):
@@ -24,6 +25,7 @@ def render_frames(blend_file):
         )
 
     print(f"Rendered {len(lyrics)} frames")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:

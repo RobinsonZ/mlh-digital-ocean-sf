@@ -3,6 +3,7 @@
 # concat a list of input PNGs into an output video
 
 import sys
+
 import cv2
 
 if len(sys.argv) < 3:
@@ -15,7 +16,7 @@ images = sys.argv[2:]
 first_img = cv2.imread(images[0])
 height, width = first_img.shape[:2]
 
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+fourcc = cv2.VideoWriter_fourcc(*"mp4v")
 out = cv2.VideoWriter(output, fourcc, 30.0, (width, height))
 
 for img_path in images:
