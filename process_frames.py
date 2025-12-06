@@ -144,8 +144,11 @@ def worker(queue):
         if item is None:
             break
         i, image_path, total = item
-        process_image(i, image_path, total)
-        queue.task_done()
+        try:
+            process_image(i, image_path, total)
+            queue.task_done()
+        except:
+            print(f"[{i}/{total}] Error processing {image_path}!")
 
 queue = Queue()
 threads = []
