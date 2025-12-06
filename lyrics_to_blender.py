@@ -21,7 +21,25 @@ def add_text(x: float, y: float, text: str):
     text_obj.location.x = -width / 2
     text_obj.location.y = -height / 2
 
+    return text_obj
 
-add_text(-1, 0, "Text")
+
+def set_appear_keyframe(obj, frame: int):
+    obj.scale = (0, 0, 0)
+    obj.keyframe_insert(data_path="scale", frame=frame - 1)
+    obj.scale = (1, 1, 1)
+    obj.keyframe_insert(data_path="scale", frame=frame)
+
+
+def set_disappear_keyframe(obj, frame: int):
+    obj.scale = (1, 1, 1)
+    obj.keyframe_insert(data_path="scale", frame=frame - 1)
+    obj.scale = (0, 0, 0)
+    obj.keyframe_insert(data_path="scale", frame=frame)
+
+
+obj = add_text(-1, 0, "Text")
+set_appear_keyframe(obj, 20)
+set_disappear_keyframe(obj, 100)
 
 bpy.ops.wm.save_mainfile()
