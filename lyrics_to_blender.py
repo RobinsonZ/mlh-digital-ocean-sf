@@ -25,17 +25,25 @@ def add_text(x: float, y: float, text: str):
 
 
 def set_appear_keyframe(obj, frame: int):
-    obj.scale = (0, 0, 0)
-    obj.keyframe_insert(data_path="scale", frame=frame - 1)
-    obj.scale = (1, 1, 1)
-    obj.keyframe_insert(data_path="scale", frame=frame)
+    obj.hide_render = True
+    obj.hide_viewport = True
+    obj.keyframe_insert(data_path="hide_render", frame=frame - 1)
+    obj.keyframe_insert(data_path="hide_viewport", frame=frame - 1)
+    obj.hide_render = False
+    obj.hide_viewport = False
+    obj.keyframe_insert(data_path="hide_render", frame=frame)
+    obj.keyframe_insert(data_path="hide_viewport", frame=frame)
 
 
 def set_disappear_keyframe(obj, frame: int):
-    obj.scale = (1, 1, 1)
-    obj.keyframe_insert(data_path="scale", frame=frame - 1)
-    obj.scale = (0, 0, 0)
-    obj.keyframe_insert(data_path="scale", frame=frame)
+    obj.hide_render = False
+    obj.hide_viewport = False
+    obj.keyframe_insert(data_path="hide_render", frame=frame - 1)
+    obj.keyframe_insert(data_path="hide_viewport", frame=frame - 1)
+    obj.hide_render = True
+    obj.hide_viewport = True
+    obj.keyframe_insert(data_path="hide_render", frame=frame)
+    obj.keyframe_insert(data_path="hide_viewport", frame=frame)
 
 
 obj = add_text(-1, 0, "Text")
