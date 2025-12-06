@@ -25,8 +25,17 @@ Format is `[MM:SS.cs] text` where cs = centiseconds.
 - `process_frames.py` - submits rendered frames to ComfyUI API for AI generation
 - `render_video.py` - renders a video from a blend file
 - `post_comfy_blender.py` - validates AI-generated images match lyric count
+- `run_pipeline.py` - runs steps 1-3 in one command
 
 ## Workflow
+
+### all-in-one
+```sh
+python3 run_pipeline.py $COMFY_API [parallelism]
+```
+runs all three steps: creates blender project, renders frames, processes through comfy api
+
+### individual steps
 
 ### 1. generate lyrics blender project
 ```sh
