@@ -7,8 +7,6 @@ The high level goal of this project is as follows:
 We're still working on the blender part, but
 We have word-timed lyrics in LRC format and matching audio files.
 
-`words.py` plays the audio section with lyrics and displays them in sync.
-
 LRC format example:
 ```
 [02:04.45] You'll be that girl, 
@@ -20,21 +18,38 @@ Format is `[MM:SS.cs] text` where cs = centiseconds.
 ## Files
 - `songs/you_make_me_feel_remix.lrc` - word-timed lyrics
 - `songs/you_make_me_feel_remix.wav` - audio
-- `songs/words.py` - plays synced section
+- `util.py` - shared code for parsing LRC files
+- `lyrics_to_blender.py` - creates blender project with text objects for each lyric
+- `render_frames.py` - renders a PNG for each lyric frame
+- `render_frame.py` - renders a single frame from a blend file
+- `render_video.py` - renders a video from a blend file
+- `post_comfy_blender.py` - validates AI-generated images match lyric count
 
-## Blender Script
+## Workflow
 
-`blender/import_lyrics_to_blender.py` converts LRC timestamps to keyframes.
-
-Config options:
-```python
-CONFIG = {
-    "lyrics_lrc": "/path/to/file.lrc",
-    "audio_file": "/path/to/file.wav",
-    "fps": 30,
-    "animation_style": "word_scale",  # or line_visibility, word_emission, word_color
-}
+### 1. generate lyrics blender project
+```sh
+blender --background --python lyrics_to_blender.py
 ```
+creates `lyrics_project.blend` with text objects for each lyric
+
+### 2. render a frame for each lyric
+```sh
+python3 ./render_frames.py lyrics_project.blend
+```
+outputs 68 frames to `out/` directory
+
+### 3. give frames to zack for AI generation
+zack takes the frames and generates epic AI images for each one
+
+### 4. put generated images in in/ folder
+zack puts the AI-generated images in `in/` directory (must be 68 images)
+
+### 5. validate and create new blender file
+```sh
+python3 ./post_comfy_blender.py
+```
+validates image count matches lyrics, then creates new blender project with AI images (TODO)
 
 ## Agent vibes
 - you are always very brief. you rarely send messages more than a few sentances.

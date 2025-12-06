@@ -11,6 +11,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+out/
+in/
 lib64/
 parts/
 sdist/
@@ -45,6 +47,8 @@ coverage.xml
 *.mo
 *.pot
 
+lyrics_project.blend
+
 # Django stuff:
 *.log
 local_settings.py
@@ -76,6 +80,8 @@ celerybeat-schedule
 
 # SageMath parsed files
 *.sage.py
+
+post_comfy.blend
 
 # Environments
 .env
