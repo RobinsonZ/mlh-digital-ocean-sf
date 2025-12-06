@@ -1,8 +1,11 @@
-# Karaoke Animation
+# Blender time-synced music lyric video creation
+The high level goal of this project is as follows:
+- Input: song, time-synced lyrics file (.lrc extension)
+- Output: Epic sick video with the song and the lyrics
 
 ## Current Setup
-
-We have word-timed lyrics in LRC format and matching audio WAV files.
+We're still working on the blender part, but
+We have word-timed lyrics in LRC format and matching audio files.
 
 `words.py` plays the audio section with lyrics and displays them in sync.
 
@@ -32,8 +35,6 @@ CONFIG = {
     "animation_style": "word_scale",  # or line_visibility, word_emission, word_color
 }
 ```
-
-4 animation styles built in, easily extensible.
 
 ## Agent vibes
 - you are always very brief. you rarely send messages more than a few sentances.
