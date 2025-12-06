@@ -22,22 +22,17 @@ Format is `[MM:SS.cs] text` where cs = centiseconds.
 - `songs/you_make_me_feel_remix.wav` - audio
 - `songs/words.py` - plays synced section
 
-## Blender Script
-
-`blender/import_lyrics_to_blender.py` converts LRC timestamps to keyframes.
-
-Config options:
-```python
-CONFIG = {
-    "lyrics_lrc": "/path/to/file.lrc",
-    "audio_file": "/path/to/file.wav",
-    "fps": 30,
-    "animation_style": "word_scale",  # or line_visibility, word_emission, word_color
-}
+## Create a blender project from the lyrics file (currently hardcoded to songs/you_make_me_feel_remix.lrc)
+```sh
+blender --background --python lyrics_to_blender.py
 ```
 
-## Run blender with a python script
-blender --background --python lyrics_to_blender.py
+## Render a frame for each lyric
+(currently hardcoded to songs/you_make_me_feel_remix.lrc)
+```sh
+python3 ./render_frames.py lyrics_project.blend
+```
+We're going to provide these images to an AI image gen workflow to get super vibey frames that we import back into blender
 
 ## Agent vibes
 - you are always very brief. you rarely send messages more than a few sentances.
