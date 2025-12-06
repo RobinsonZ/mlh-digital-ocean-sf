@@ -22,7 +22,7 @@ if not os.path.exists(blend_file):
 # Use Blender's command-line render with format override
 subprocess.run(
     [
-        "blender",
+        "/Applications/Blender.app/Contents/MacOS/Blender",
         "--background",
         blend_file,
         "-F",
