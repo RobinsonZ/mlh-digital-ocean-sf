@@ -9,7 +9,15 @@ import bpy
 
 from util import parse_lrc_file
 
-source_blend = "empty.blend"
+args = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
+
+if len(args) != 1:
+    print(
+        "Usage: blender --background --python post_comfy_blender.py -- <lyrics_blend_file>"
+    )
+    sys.exit(1)
+
+source_blend = args[0]
 new_blend = "post_comfy.blend"
 
 shutil.copy(source_blend, new_blend)
@@ -28,6 +36,9 @@ if len(images) != len(lyrics_with_text):
     sys.exit(1)
 
 scene = bpy.context.scene
+scene.render.resolution_x = 1280
+scene.render.resolution_y = 720
+
 if not scene.sequence_editor:
     scene.sequence_editor_create()
 
@@ -43,5 +54,9 @@ for i, (image, lyric) in enumerate(zip(images, lyrics_with_text)):
         name=f"lyric_{i}", filepath=image_path, channel=1, frame_start=frame_start
     )
     strip.frame_final_duration = frame_end - frame_start
+
+scene.render.use_sequencer = True
+scene.render.film_transparent = False
+scene.sequencer_colorspace_settings.name = "sRGB"
 
 bpy.ops.wm.save_mainfile()

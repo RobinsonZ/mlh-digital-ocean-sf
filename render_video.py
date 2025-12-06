@@ -2,6 +2,8 @@ import os
 import subprocess
 import sys
 
+TIME_OFFSET_MS = -170
+
 blend_file = os.path.abspath(sys.argv[1])
 output_path = os.path.abspath(sys.argv[2])
 frame_start = int(sys.argv[3])
@@ -45,10 +47,14 @@ probe = subprocess.run(
 num_frames = int(probe.stdout.strip())
 duration = num_frames / 30.0
 
+offset_seconds = TIME_OFFSET_MS / 1000.0
+
 subprocess.run(
     [
         "ffmpeg",
         "-y",
+        "-itsoffset",
+        str(offset_seconds),
         "-r",
         "30",
         "-i",
