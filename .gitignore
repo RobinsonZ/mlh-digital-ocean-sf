@@ -11,6 +11,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+out/
 lib64/
 parts/
 sdist/
@@ -44,6 +45,8 @@ coverage.xml
 # Translations
 *.mo
 *.pot
+
+lyrics_project.blend
 
 # Django stuff:
 *.log
