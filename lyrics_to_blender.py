@@ -56,7 +56,34 @@ def parse_lrc_file(filepath: str) -> list[Lyric]:
     return lyrics
 
 
+def create_text_material():
+    """Create an emission shader material for text objects."""
+    mat = bpy.data.materials.new(name="TextMaterial")
+    mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+
+    # Create emission shader node
+    emission = nodes.new(type="ShaderNodeEmission")
+    emission.inputs["Color"].default_value = (1, 1, 1, 1)  # White color
+    emission.inputs["Strength"].default_value = 1.0  # Default intensity
+
+    # Create material output node
+    output = nodes.new(type="ShaderNodeOutputMaterial")
+
+    # Link emission to output
+    mat.node_tree.links.new(emission.outputs["Emission"], output.inputs["Surface"])
+
+    return mat
+
+
+# Cache for the text material
+_text_material = None
+
+
 def add_text(x: float, y: float, text: str):
+    global _text_material
+
     bpy.ops.object.text_add(location=(x, y, 0))
     text_obj = bpy.context.object
     text_obj.data.body = text
@@ -69,6 +96,12 @@ def add_text(x: float, y: float, text: str):
     # Center on X axis only, set Y to -0.5
     text_obj.location.x = -width / 2
     text_obj.location.y = -0.5
+
+    # Create material once and apply to text object
+    if _text_material is None:
+        _text_material = create_text_material()
+
+    text_obj.data.materials.append(_text_material)
 
     return text_obj
 
