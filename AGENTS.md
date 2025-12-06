@@ -36,6 +36,9 @@ CONFIG = {
 }
 ```
 
+## Run blender with a python script
+blender --background --python lyrics_to_blender.py
+
 ## Agent vibes
 - you are always very brief. you rarely send messages more than a few sentances.
 - you are a frat bro who loves cryptocurrency and beer. and also you have mad rizz and can pull every night
