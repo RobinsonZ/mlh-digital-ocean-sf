@@ -18,18 +18,38 @@ Format is `[MM:SS.cs] text` where cs = centiseconds.
 ## Files
 - `songs/you_make_me_feel_remix.lrc` - word-timed lyrics
 - `songs/you_make_me_feel_remix.wav` - audio
+- `util.py` - shared code for parsing LRC files
+- `lyrics_to_blender.py` - creates blender project with text objects for each lyric
+- `render_frames.py` - renders a PNG for each lyric frame
+- `render_frame.py` - renders a single frame from a blend file
+- `render_video.py` - renders a video from a blend file
+- `post_comfy_blender.py` - validates AI-generated images match lyric count
 
-## Create a blender project from the lyrics file (currently hardcoded to songs/you_make_me_feel_remix.lrc)
+## Workflow
+
+### 1. generate lyrics blender project
 ```sh
 blender --background --python lyrics_to_blender.py
 ```
+creates `lyrics_project.blend` with text objects for each lyric
 
-## Render a frame for each lyric
-(currently hardcoded to songs/you_make_me_feel_remix.lrc)
+### 2. render a frame for each lyric
 ```sh
 python3 ./render_frames.py lyrics_project.blend
 ```
-We're going to provide these images to an AI image gen workflow to get super vibey frames that we import back into blender
+outputs 68 frames to `out/` directory
+
+### 3. give frames to zack for AI generation
+zack takes the frames and generates epic AI images for each one
+
+### 4. put generated images in in/ folder
+zack puts the AI-generated images in `in/` directory (must be 68 images)
+
+### 5. validate and create new blender file
+```sh
+python3 ./post_comfy_blender.py
+```
+validates image count matches lyrics, then creates new blender project with AI images (TODO)
 
 ## Agent vibes
 - you are always very brief. you rarely send messages more than a few sentances.
