@@ -35,12 +35,15 @@ if len(images) != len(lyrics_with_text):
     )
     sys.exit(1)
 
-scene = bpy.context.scene
-scene.render.resolution_x = 1280
-scene.render.resolution_y = 720
+edit_scene = bpy.data.scenes["Edit"]
+lyrics_scene = bpy.data.scenes["3D Lyrics"]
 
-if not scene.sequence_editor:
-    scene.sequence_editor_create()
+edit_scene.render.resolution_x = 1280
+edit_scene.render.resolution_y = 720
+edit_scene.render.use_sequencer = True
+
+if not edit_scene.sequence_editor:
+    edit_scene.sequence_editor_create()
 
 for i, (image, lyric) in enumerate(zip(images, lyrics_with_text)):
     frame_start = lyric.frame()
@@ -50,13 +53,17 @@ for i, (image, lyric) in enumerate(zip(images, lyrics_with_text)):
         frame_end = frame_start + (240 * 2)
 
     image_path = os.path.abspath(os.path.join(in_dir, image))
-    strip = scene.sequence_editor.strips.new_image(
+    strip = edit_scene.sequence_editor.strips.new_image(
         name=f"lyric_{i}", filepath=image_path, channel=1, frame_start=frame_start
     )
     strip.frame_final_duration = frame_end - frame_start
 
-scene.render.use_sequencer = True
-scene.render.film_transparent = False
-scene.sequencer_colorspace_settings.name = "sRGB"
+lyrics_strip = edit_scene.sequence_editor.strips.new_scene(
+    name="3D_Lyrics", scene=lyrics_scene, channel=2, frame_start=1
+)
+lyrics_strip.scene_input = "CAMERA"
+lyrics_strip.blend_type = "ALPHA_OVER"
+
+bpy.context.window.scene = edit_scene
 
 bpy.ops.wm.save_mainfile()
