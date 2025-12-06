@@ -22,6 +22,7 @@ Format is `[MM:SS.cs] text` where cs = centiseconds.
 - `lyrics_to_blender.py` - creates blender project with text objects for each lyric
 - `render_frames.py` - renders a PNG for each lyric frame
 - `render_frame.py` - renders a single frame from a blend file
+- `process_frames.py` - submits rendered frames to ComfyUI API for AI generation
 - `render_video.py` - renders a video from a blend file
 - `post_comfy_blender.py` - validates AI-generated images match lyric count
 
@@ -29,7 +30,7 @@ Format is `[MM:SS.cs] text` where cs = centiseconds.
 
 ### 1. generate lyrics blender project
 ```sh
-blender --background --python lyrics_to_blender.py
+/Applications/Blender.app/Contents/MacOS/Blender --background --python lyrics_to_blender.py
 ```
 creates `lyrics_project.blend` with text objects for each lyric
 
@@ -37,15 +38,19 @@ creates `lyrics_project.blend` with text objects for each lyric
 ```sh
 python3 ./render_frames.py lyrics_project.blend
 ```
-outputs 68 frames to `out/` directory
+outputs frames to `out/` directory
 
-### 3. give frames to zack for AI generation
-zack takes the frames and generates epic AI images for each one
+### 3. process frames through comfyui api
+```sh
+python3.11 process_frames.py $COMFY_API [parallelism]
+```
+submits each frame from `out/` to comfyui api, polls for completion, downloads generated images to `in/`
+- parallelism defaults to 1, can be increased for faster processing
+- automatically skips already-generated images
+- ctrl-c cancels all active api jobs
+- uses random seeds for variety
 
-### 4. put generated images in in/ folder
-zack puts the AI-generated images in `in/` directory (must be 68 images)
-
-### 5. validate and create new blender file
+### 4. validate and create new blender file
 ```sh
 python3 ./post_comfy_blender.py
 ```
